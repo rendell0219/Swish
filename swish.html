@@ -1,0 +1,178 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Swish | Online Shoe Store</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: #fff;
+        color: #000;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+        background: #000;
+        color: #fff;
+      }
+      header .logo {
+        font-size: 1.8rem;
+        font-weight: bold;
+      }
+      nav a {
+        margin-left: 1.5rem;
+        color: #fff;
+        text-decoration: none;
+      }
+      .products {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 2rem;
+        padding: 2rem;
+      }
+      .product {
+        border: 1px solid #ddd;
+        padding: 1rem;
+        text-align: center;
+      }
+      .product img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+      }
+      .product h3 {
+        margin: 0.5rem 0;
+      }
+      .product button {
+        padding: 0.5rem 1rem;
+        background: #000;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+      }
+      footer {
+        text-align: center;
+        padding: 2rem;
+        background: #f4f4f4;
+      }
+      #cart {
+        padding: 2rem;
+        border-top: 1px solid #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="logo">Swish</div>
+      <nav>
+        <a href="#">Home</a>
+        <a href="#shop">Shop</a>
+        <a href="#cart">Cart</a>
+        <a href="#about">About</a>
+      </nav>
+    </header>
+
+    <section id="shop" class="products"></section>
+
+    <section id="cart">
+      <h2>Your Cart</h2>
+      <ul id="cart-items"></ul>
+      <p><strong>Total: $<span id="total">0</span></strong></p>
+    </section>
+
+    <footer>
+      <p>&copy; 2025 Swish. All rights reserved.</p>
+    </footer>
+
+    <script>
+      const products = [
+        {
+          name: "Light Gray Sneakers",
+          price: 100,
+          img: "https://thursdayboots.com/cdn/shop/products/1024x1024-Premier-LowTop-LightGrey-013123-3.4.jpg?v=1679943565"
+        },
+        {
+          name: "Beige and White Shoes",
+          price: 110,
+          img: "https://cdn.broadsheet.com.au/cache/d8/a9/d8a9ff469e9b15cc2d4885f1f4368884.jpg"
+        },
+        {
+          name: "Black Sneakers",
+          price: 95,
+          img: "https://thursdayboots.com/cdn/shop/products/1024x1024-Men-Sneakers-Premier-LowTop-BlackMatte-063022-3.4_1024x1024.jpg?v=1658504828"
+        },
+        {
+          name: "White Casual Shoes",
+          price: 105,
+          img: "https://cdnimg.brunomarc.com/thumbnail/432x432/brunomarcshoes/product/product/2022-09-19/4765/10:03--1.jpg"
+        },
+        {
+          name: "Gray Running Shoes",
+          price: 120,
+          img: "https://merrell.com.ph/cdn/shop/products/MRLW-J005468-WHT-020722-S23-000_1280x1280_7468a3a6-9d48-4797-a33f-3dc5d3eb85b9.jpg?v=1746020602"
+        },
+        {
+          name: "Blue and White Shoes",
+          price: 115,
+          img: "https://i.ebayimg.com/images/g/x9sAAOSwflJljY3Z/s-l1200.jpg"
+        },
+        {
+          name: "High-Top Sneakers",
+          price: 130,
+          img: "https://www.anta.ph/cdn/shop/files/112435546-6-2.jpg?v=1737715572"
+        },
+        {
+          name: "Slip-on Shoes",
+          price: 90,
+          img: "https://www.ndure.com/cdn/shop/products/1_6bc19d6d-a027-46ae-8749-6819dafcf1ff.jpg?v=1671088838"
+        }
+      ];
+
+      const cart = [];
+
+      function renderProducts() {
+        const shop = document.getElementById('shop');
+        shop.innerHTML = '';
+        products.forEach((product, index) => {
+          const productDiv = document.createElement('div');
+          productDiv.className = 'product';
+          productDiv.innerHTML = `
+            <img src="${product.img}" alt="${product.name}">
+            <h3>${product.name}</h3>
+            <p>$${product.price}</p>
+            <button>Add to Cart</button>
+          `;
+          const button = productDiv.querySelector('button');
+          button.addEventListener('click', () => addToCart(index));
+          shop.appendChild(productDiv);
+        });
+      }
+
+      function addToCart(index) {
+        cart.push(products[index]);
+        updateCart();
+      }
+
+      function updateCart() {
+        const cartItems = document.getElementById('cart-items');
+        const totalDisplay = document.getElementById('total');
+        cartItems.innerHTML = '';
+        let total = 0;
+        cart.forEach(item => {
+          const li = document.createElement('li');
+          li.textContent = `${item.name} - $${item.price}`;
+          cartItems.appendChild(li);
+          total += item.price;
+        });
+        totalDisplay.textContent = total;
+      }
+
+      document.addEventListener('DOMContentLoaded', renderProducts);
+    </script>
+  </body>
+  </html>
